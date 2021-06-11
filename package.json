@@ -4,7 +4,6 @@
   "description": "GMTK Game Jam 2021",
   "main": "build/main.js",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
     "download-phaser-typedef": "download --out typings https://raw.githubusercontent.com/photonstorm/phaser/master/types/phaser.d.ts",
     "superclean": "rimraf .cache node_modules dist",
     "clean": "rimraf build dist",
@@ -35,8 +34,7 @@
     ]
   },
   "keywords": [
-    "phaser",
-    "electron"
+    "phaser"
   ],
   "author": {
     "name": "Måns Gezelius",
