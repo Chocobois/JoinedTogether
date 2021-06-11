@@ -1,7 +1,7 @@
 import { BaseScene } from "./BaseScene";
 import { GrayScalePostFilter } from "../pipelines/GrayScalePostFilter";
 import { BlurPostFilter } from "../pipelines/BlurPostFilter";
-import { images, audio } from "../assets";
+import { images, spritesheets } from "../assets";
 
 export class PreloadScene extends BaseScene {
 	constructor() {
@@ -15,7 +15,8 @@ export class PreloadScene extends BaseScene {
 	}
 
 	preload() {
-		// Loading bar
+		/* Loading bar */
+
 		let width = 0.5 * this.W;
 		let x = this.CX - width/2;
 		let y = this.CY;
@@ -30,9 +31,17 @@ export class PreloadScene extends BaseScene {
 			bar.width = progress * width;
 		});
 
+
+		/* Assets */
+
 		// Load images
-		for (let image of images) {
-			this.load.image(image.key, image.path);
+		for (let asset of images) {
+			this.load.image(asset.key, asset.path);
+		}
+
+		// Load images
+		for (let asset of spritesheets) {
+			this.load.spritesheet(asset.key, asset.path, { frameWidth: asset.width, frameHeight: asset.height });
 		}
 	}
 

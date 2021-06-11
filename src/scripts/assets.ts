@@ -1,16 +1,28 @@
 import { prependPath } from "./utils";
 
-interface Asset {
+interface Image {
 	key: string;
 	path: string;
 }
 
-const images: Asset[] = prependPath("assets/images/", [
+const images: Image[] = prependPath("assets/images/", [
 	{ key: "player",	path: "player.png" },
 	{ key: "background",	path: "background.png" },
 ]);
 
-const audio: Asset[] = prependPath("assets/audio/", [
+
+interface SpriteSheet {
+	key: string;
+	path: string;
+	width: number;
+	height: number;
+}
+
+const spritesheets: SpriteSheet[] = prependPath("assets/spritesheets/", [
+	{ key: 'mouse',		path: 'mouse.png',	width: 256,	height: 200 }
 ]);
 
-export { images, audio };
+
+// const audio: Asset[] = prependPath("assets/audio/", []);
+
+export { images, spritesheets };
