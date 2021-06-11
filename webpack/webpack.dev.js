@@ -5,7 +5,9 @@ const dev = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    open: false
+    open: false,
+    inline: true,
+    port: 8000
   }
 };
 
