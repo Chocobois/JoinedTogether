@@ -1,5 +1,5 @@
 {
-  "name": "GAMEJAM",
+  "name": "JoinedTogether",
   "version": "1.0.0",
   "description": "GMTK Game Jam 2021",
   "main": "build/main.js",
@@ -10,10 +10,10 @@
     "serve": "webpack serve --config webpack/webpack.dev.js",
     "build": "rimraf dist && webpack --config webpack/webpack.prod.js"
   },
-  "homepage": "https://github.com/Golen87/REPO",
+  "homepage": "https://github.com/Golen87/JoinedTogether",
   "build": {
-    "appId": "REPO",
-    "productName": "REPO",
+    "appId": "joinedtogether",
+    "productName": "Joined Together",
     "mac": {
       "category": "your.app.category.type"
     },

@@ -7,7 +7,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: ['./src/game.ts'],
   output: {
-    path: path.resolve(__dirname, '../public'),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
     chunkFilename: '[name].chunk.js'
   },
@@ -21,14 +21,6 @@ module.exports = {
         include: path.join(__dirname, '../src'),
         loader: 'ts-loader'
       },
-      // {
-        // test: /\.s[ac]ss$/i,
-        // use: [
-          // "style-loader",
-          // "css-loader",
-          // "sass-loader",
-        // ],
-      // },
     ]
   },
   optimization: {

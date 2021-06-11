@@ -1,6 +1,7 @@
 import { BaseScene } from "./BaseScene";
+import { GrayScalePostFilter } from "../pipelines/GrayScalePostFilter";
+import { BlurPostFilter } from "../pipelines/BlurPostFilter";
 import { images, audio } from "../assets";
-
 
 export class PreloadScene extends BaseScene {
 	constructor() {
@@ -8,9 +9,9 @@ export class PreloadScene extends BaseScene {
 	}
 
 	init() {
-		// let renderer = (this.renderer as Phaser.Renderer.WebGL.WebGLRenderer);
-		// renderer.pipelines.addPostPipeline("GrayScalePostFilter", GrayScalePostFilter);
-		// renderer.pipelines.addPostPipeline("BlurPostFilter", BlurPostFilter);
+		let renderer = (this.renderer as Phaser.Renderer.WebGL.WebGLRenderer);
+		renderer.pipelines.addPostPipeline("GrayScalePostFilter", GrayScalePostFilter);
+		renderer.pipelines.addPostPipeline("BlurPostFilter", BlurPostFilter);
 	}
 
 	preload() {
@@ -29,7 +30,6 @@ export class PreloadScene extends BaseScene {
 			bar.width = progress * width;
 		});
 
-
 		// Load images
 		for (let image of images) {
 			this.load.image(image.key, image.path);
@@ -37,9 +37,6 @@ export class PreloadScene extends BaseScene {
 	}
 
 	create() {
-		// let bg = this.add.image(this.CX, this.CY, 'bg_serengeti');
-		// this.fitToScreen(bg);
-
 		this.fade(true, 100, 0x000000);
 		this.addEvent(110, () => {
 			this.scene.start("GameScene");
