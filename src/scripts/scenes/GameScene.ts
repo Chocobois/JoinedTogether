@@ -3,10 +3,12 @@ import { AudioManager } from "../AudioManager";
 import { Player } from "../components/Player";
 import { Narrator } from "../components/Narrator";
 import { Phrase, phraseData, areaData } from "../components/Phrase";
+import { World } from "../components/World";
 
 export class GameScene extends BaseScene {
 	private audio: AudioManager;
 	public player: Player;
+	private world: World;
 	private narrator: Narrator;
 	private keys: any;
 	private zones: Phaser.GameObjects.Zone[];
@@ -31,6 +33,9 @@ export class GameScene extends BaseScene {
 		bg.setAlpha(0.1);
 		this.containToScreen(bg);
 
+
+		/* World */
+		this.world = new World(this, 0,0);
 
 		// Player
 		this.player = new Player(this, 0.3*this.W, this.CY);

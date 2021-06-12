@@ -48,6 +48,10 @@ export class PreloadScene extends BaseScene {
 		for (let asset of audio) {
 			this.load.audio(asset.key, [asset.path]);
 		}
+
+		// Load map
+		this.load.image('tiles', 'assets/tilemaps/tiles.png');
+		this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
 	}
 
 	create() {
