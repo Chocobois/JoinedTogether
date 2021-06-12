@@ -3,7 +3,7 @@ import { GameScene } from "../scenes/GameScene";
 export class Player extends Phaser.GameObjects.Container {
 	public scene: GameScene;
 
-	private sprite: Phaser.GameObjects.Sprite;
+	public sprite: Phaser.GameObjects.Sprite;
 	public thoughtBubble: Phaser.GameObjects.Sprite;
 	// private thoughtText: Phaser.GameObjects.Text;
 	private walkSpeed: number;
@@ -24,6 +24,7 @@ export class Player extends Phaser.GameObjects.Container {
 		this.thoughtBubble = this.scene.add.sprite(0, -50, "thought", 0);
 		this.thoughtBubble.setOrigin(0.5, 1);
 		this.thoughtBubble.setScale(0.6);
+		this.thoughtBubble.setVisible(false);
 		this.thoughtBubble.play('thinking', true);
 		this.add(this.thoughtBubble);
 

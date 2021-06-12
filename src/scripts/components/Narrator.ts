@@ -1,5 +1,5 @@
 import { GameScene } from "../scenes/GameScene";
-import { Phrase } from "./Phrase";
+import { Phrase, phraseData, areaData } from "./Phrase";
 import { Word } from "./Word";
 import { DragWord } from "./DragWord";
 
@@ -10,7 +10,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 	private cY: number;
 	private words: Word[];
 	public thoughtWord: Word;
-	private dragWord: DragWord;
+	public dragWord: DragWord;
 	private selected?: Word;
 	private dropzone?: Word;
 
@@ -24,7 +24,6 @@ export class Narrator extends Phaser.GameObjects.Container {
 		// Create Words
 		this.words = [];
 		for (let i = 0; i < 10; i++) {
-
 			let word = this.createWord();
 			this.add(word);
 			this.words.push(word);
@@ -32,10 +31,10 @@ export class Narrator extends Phaser.GameObjects.Container {
 
 		// Create thought word
 		this.thoughtWord = this.createWord();
-		this.thoughtWord.setPhrase({ text: "Sus", draggable: true, empty: true });
+		this.thoughtWord.setPhrase(phraseData["empty"]);
 		this.thoughtWord.setVisible(true);
 		this.thoughtWord.setScale(0.7);
-		this.add(this.thoughtWord);
+		this.scene.add.existing(this.thoughtWord);
 
 		// Create interactive word
 		this.dragWord = new DragWord(this.scene, {
@@ -44,15 +43,13 @@ export class Narrator extends Phaser.GameObjects.Container {
 			color: "#000"
 		});
 		this.makeDraggable();
-		this.add(this.dragWord);
+		this.scene.add.existing(this.dragWord);
 
 
-		this.setPhrases([
-			{ text: "The", draggable: false, empty: false },
-			{ text: "sussy", draggable: true, empty: false },
-			{ text: "baka found himself", draggable: false, empty: false },
-			{ text: "impostering", draggable: true, empty: false },
-		]);
+		// this.setPhrases([
+			// { text: "A cat is in a dungeon", draggable: false, empty: false },
+			// { text: "and he's smelly", draggable: true, empty: false },
+		// ]);
 	}
 
 	update(time: number, delta: number) {
@@ -65,8 +62,8 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.checkOverlap(this.thoughtWord);
 		this.dragWord.update(time, delta);
 
-		this.thoughtWord.x = this.scene.player.x - this.thoughtWord.displayWidth/2;
-		this.thoughtWord.y = this.scene.player.y - 115;
+		this.thoughtWord.x = this.scene.CX - this.thoughtWord.displayWidth/2;
+		this.thoughtWord.y = this.scene.CY - 115;
 
 		let showThought = (!this.thoughtWord.empty || this.dragWord.drag);
 		this.thoughtWord.setVisible(showThought);
@@ -94,10 +91,8 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.resetText();
 
 		for (let i = 0; i < phrases.length; i++) {
-			let word = this.words[i];
-			let phrase = phrases[i];
-			word.setPhrase(phrase);
-			word.setVisible(true);
+			this.words[i].setPhrase(phrases[i]);
+			this.words[i].setVisible(true);
 		}
 
 		this.repositionText();
@@ -128,7 +123,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 				this.dragWord.x = word.x;
 				this.dragWord.y = word.y;
 				this.dragWord.setScale(word.scaleX);
-				this.dragWord.setText(word.phrase);
+				this.dragWord.setText(word.phrase.text);
 				this.dragWord.setVisible(true);
 
 				this.selected = word;
@@ -138,11 +133,13 @@ export class Narrator extends Phaser.GameObjects.Container {
 	}
 
 	checkOverlap(word) {
-		word.setEmpty(word.empty);
-		if (word.draggable && word.empty && this.dragWord.drag && this.selected) {
-			if (Phaser.Geom.Rectangle.Contains(word.input.hitArea, this.scene.input.x-word.x, this.scene.input.y-word.y+word.displayHeight/2)) {
-				this.dropzone = word;
-				word.setStroke("#00FF00", 4);
+		if (word.getPhrase()) {
+			word.setEmpty(word.empty);
+			if (word.draggable && word.empty && this.dragWord.drag && this.selected) {
+				if (Phaser.Geom.Rectangle.Contains(word.input.hitArea, this.scene.input.x-word.x, this.scene.input.y-word.y+word.displayHeight/2)) {
+					this.dropzone = word;
+					word.setStroke("#00FF00", 4);
+				}
 			}
 		}
 	}

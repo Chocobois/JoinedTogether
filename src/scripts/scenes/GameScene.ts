@@ -2,12 +2,16 @@ import { BaseScene } from "./BaseScene";
 import { AudioManager } from "../AudioManager";
 import { Player } from "../components/Player";
 import { Narrator } from "../components/Narrator";
+import { Phrase, phraseData, areaData } from "../components/Phrase";
 
 export class GameScene extends BaseScene {
 	private audio: AudioManager;
 	public player: Player;
 	private narrator: Narrator;
 	private keys: any;
+	private zones: Phaser.GameObjects.Zone[];
+	private zoneTimer: number;
+	private currentZone?: Phaser.GameObjects.Zone;
 
 	constructor() {
 		super({key: "GameScene"});
@@ -24,38 +28,24 @@ export class GameScene extends BaseScene {
 		/* Background */
 
 		let bg = this.add.image(this.CX, this.CY, "background");
-		bg.setAlpha(0.2);
+		bg.setAlpha(0.1);
 		this.containToScreen(bg);
 
 
-		/* Player */
-
+		// Player
 		this.player = new Player(this, 0.3*this.W, this.CY);
+		// this.player.setScrollFactor(0, 0);
+		this.physics.world.enable(this.player.sprite);
+		this.cameras.main.startFollow(this.player);
 
-
-		/* Narrator */
-
+		// Narrator
 		this.narrator = new Narrator(this, this.CX, 0.85*this.H);
+		this.narrator.setScrollFactor(0, 0);
 
-
-		/* Audio */
-
+		// Audio
 		this.audio = new AudioManager(this, this.CX, 0.85*this.H);
 
-		// this.audio.play("V_01"); // You wake up, alone within a dark room.
-
-		// this.audio.play("V_02_Start"); // In front of you lies a door, which is--
-		// this.audio.play("V_Not"); // [not]
-		// this.audio.play("V_02_End"); // --open.
-
-		// this.audio.play("V_03"); // After heading through the door, you come across a tunnel.
-
-		// this.audio.play("V_04_Start"); // A dense buildup of cobwebs are--
-		// this.audio.play("V_Not"); // [not]
-		// this.audio.play("V_04_End"); // --blocking your way.
-
-
-		/* Input */
+		this.createAreaTriggers();
 
 		this.setupInput();
 	}
@@ -63,6 +53,36 @@ export class GameScene extends BaseScene {
 	update(time: number, deltaMs: number): void {
 		this.player.update(time, deltaMs);
 		this.narrator.update(time, deltaMs);
+
+		this.narrator.setAlpha(this.zoneTimer);
+		this.zoneTimer -= 0.1;
+		if (this.zoneTimer <= 0) {
+			this.currentZone = undefined;
+		}
+	}
+
+
+	createAreaTriggers() {
+		this.zones = [];
+
+		for (let name in areaData) {
+			let area = areaData[name];
+
+			// let rect = this.add.rectangle(area.hitarea.x, area.hitarea.y, area.hitarea.w, area.hitarea.h, 0xFFFF00, 0.2);
+			// rect.setOrigin(0);
+
+			let zone = this.add.zone(area.hitarea.x, area.hitarea.y, area.hitarea.w, area.hitarea.h);
+			this.zones.push(zone);
+			this.physics.world.enable(zone);
+
+			this.physics.add.overlap(this.player.sprite, zone, () => {
+				this.zoneTimer = 2;
+				if (this.currentZone != zone) {
+					this.currentZone = zone;
+					this.narrator.setPhrases(area.phrases);
+				}
+			});
+		}
 	}
 
 
@@ -106,10 +126,18 @@ export class GameScene extends BaseScene {
 	}
 
 	getInputDirection() {
-		return {
-			x: (-1 * this.left) + (1 * this.right),
-			y: (-1 * this.up) + (1 * this.down),
-		};
+		if (!this.narrator.dragWord.drag) {
+			return {
+				x: (-1 * this.left) + (1 * this.right),
+				y: (-1 * this.up) + (1 * this.down),
+			};
+		}
+		else {
+			return {
+				x: 0,
+				y: 0,
+			};
+		}
 	}
 
 	onTapDown(event) {

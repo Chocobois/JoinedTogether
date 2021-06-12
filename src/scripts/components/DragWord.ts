@@ -17,6 +17,7 @@ export class DragWord extends Phaser.GameObjects.Text {
 
 		this.setOrigin(0, 0.5);
 		this.setVisible(false);
+		this.setScrollFactor(0, 0);
 
 		this.setStroke("#FF0000", 4);
 

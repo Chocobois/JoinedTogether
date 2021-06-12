@@ -13,6 +13,13 @@ const config: Phaser.Types.Core.GameConfig = {
 		mode: Phaser.Scale.FIT
 		// mode: Phaser.Scale.RESIZE
 	},
+	physics: {
+		default: 'arcade',
+		arcade: {
+			debug: true,
+			gravity: { y: 0 }
+		}
+	},
 	scene: [
 		PreloadScene,
 		GameScene
