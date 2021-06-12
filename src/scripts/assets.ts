@@ -1,10 +1,10 @@
 import { prependPath } from "./utils";
 
+
 interface Image {
 	key: string;
 	path: string;
 }
-
 const images: Image[] = prependPath("assets/images/", [
 	{ key: "player",	path: "player.png" },
 	{ key: "background",	path: "background.png" },
@@ -17,10 +17,10 @@ interface SpriteSheet {
 	width: number;
 	height: number;
 }
-
 const spritesheets: SpriteSheet[] = prependPath("assets/spritesheets/", [
-	{ key: 'mouse',		path: 'mouse.png',	width: 256,	height: 200 },
-	{ key: 'cat',		path: 'cat.png',	width: 256,	height: 256 },
+	{ key: 'mouse',		path: 'mouse.png',		width: 256,	height: 200 },
+	{ key: 'cat',		path: 'cat.png',		width: 256,	height: 256 },
+	{ key: 'thought',	path: 'thought.png',	width: 370,	height: 172 },
 ]);
 
 
@@ -29,7 +29,6 @@ interface Audio {
 	path: string;
 	volume: number;
 }
-
 const audio: Audio[] = prependPath("assets/audio/", [
 	{ key: "V_01",			path: "V_01.mp3",			volume: 1.0 },
 	{ key: "V_02_End",		path: "V_02_End.mp3",		volume: 1.0 },
@@ -39,7 +38,6 @@ const audio: Audio[] = prependPath("assets/audio/", [
 	{ key: "V_04_Start",	path: "V_04_Start.mp3",		volume: 1.0 },
 	{ key: "V_Not",			path: "V_Not.mp3",			volume: 1.0 },
 ]);
-
 
 
 export { images, spritesheets, audio };
