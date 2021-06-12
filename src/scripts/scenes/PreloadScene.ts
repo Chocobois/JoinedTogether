@@ -1,7 +1,7 @@
 import { BaseScene } from "./BaseScene";
 import { GrayScalePostFilter } from "../pipelines/GrayScalePostFilter";
 import { BlurPostFilter } from "../pipelines/BlurPostFilter";
-import { images, spritesheets, audio } from "../assets";
+import { images, tiles, spritesheets, audio } from "../assets";
 
 export class PreloadScene extends BaseScene {
 	constructor() {
@@ -49,9 +49,12 @@ export class PreloadScene extends BaseScene {
 			this.load.audio(asset.key, [asset.path]);
 		}
 
-		// Load map
-		this.load.image('tiles', 'assets/tilemaps/tiles.png');
+		// Load tilemaps
+		for (let asset of tiles) {
+			this.load.image(asset.key, asset.path);
+		}
 		this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
+
 	}
 
 	create() {

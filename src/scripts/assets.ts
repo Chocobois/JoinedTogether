@@ -5,10 +5,20 @@ interface Image {
 	key: string;
 	path: string;
 }
+
+let loadImg = (name: string): Image => {
+	return { key: name, path: name + ".png" }
+}
+
 const images: Image[] = prependPath("assets/images/", [
-	{ key: "background",	path: "background.png" },
+	loadImg("background"),
 ]);
 
+const tiles: Image[] = prependPath("assets/tilemaps/", [
+	loadImg("roof"),
+	loadImg("floor"),
+	loadImg("wall")
+]);
 
 interface SpriteSheet {
 	key: string;
@@ -48,4 +58,4 @@ const audio: Audio[] = prependPath("assets/audio/", [
 ]);
 
 
-export { images, spritesheets, audio };
+export { images, tiles, spritesheets, audio };
