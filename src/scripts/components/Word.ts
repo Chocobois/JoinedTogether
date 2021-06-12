@@ -31,12 +31,8 @@ export class Word extends Phaser.GameObjects.Text {
 
 	setPhrase(phrase: Phrase) {
 		this.phrase = phrase;
-		console.warn(phrase.text, phrase.draggable, phrase.empty);
-		// this.phrase = phrase.text;
-		// this.setText(this.phrase);
 		this.setText(this.phrase.text);
 
-		// this.draggable = phrase.draggable;
 		if (this.input) {
 			this.input.enabled = this.phrase.draggable;
 		}

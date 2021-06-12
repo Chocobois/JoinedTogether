@@ -31,7 +31,7 @@ const spritesheets: SpriteSheet[] = prependPath("assets/spritesheets/", [
 	{ key: 'mouse',		path: 'mouse.png',		width: 256,	height: 200 },
 	{ key: 'cat',		path: 'cat.png',		width: 256,	height: 256 },
 	{ key: 'monster',	path: 'monster.png',	width: 256,	height: 256 },
-	{ key: 'thought',	path: 'thought.png',	width: 370,	height: 172 },
+	{ key: 'thought',	path: 'thought.png',	width: 512,	height: 256 },
 ]);
 
 
