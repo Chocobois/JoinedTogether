@@ -31,7 +31,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 
 		// Create thought word
 		this.thoughtWord = this.createWord();
-		this.thoughtWord.setPhrase(phraseData["empty"]);
+		this.thoughtWord.setPhrase(phraseData["player"]);
 		this.thoughtWord.setVisible(true);
 		this.thoughtWord.setScale(0.7);
 		this.scene.add.existing(this.thoughtWord);
@@ -192,9 +192,10 @@ export class Narrator extends Phaser.GameObjects.Container {
 
 		if (this.selected) {
 			if (this.dropzone) {
-				let phrase = this.selected.getPhrase();
-				this.selected.setPhrase(this.dropzone.getPhrase());
-				this.dropzone.setPhrase(phrase);
+				// let phrase = this.selected.getPhrase();
+				// this.selected.setPhrase(this.dropzone.getPhrase());
+				// this.dropzone.setPhrase(phrase);
+				this.swapPhrases(this.selected.phrase, this.dropzone.phrase);
 				this.dropzone.setEmpty(false);
 			}
 			else {
@@ -204,5 +205,22 @@ export class Narrator extends Phaser.GameObjects.Container {
 			this.selected = undefined;
 			this.repositionText();
 		}
+	}
+
+	swapPhrases(a: Phrase, b: Phrase) {
+		let text = a.text;
+		let audio = a.audio;
+		let draggable = a.draggable;
+		let empty = a.empty;
+
+		a.text = b.text;
+		a.audio = b.audio;
+		a.draggable = b.draggable;
+		a.empty = b.empty;
+
+		b.text = text;
+		b.audio = audio;
+		b.draggable = draggable;
+		b.empty = empty;
 	}
 }

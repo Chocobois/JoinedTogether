@@ -6,6 +6,13 @@ export interface Phrase {
 }
 
 let phraseData = {
+	"player": {
+		text: "<empty>",
+		audio: undefined,
+		draggable: true,
+		empty: true
+	},
+
 	"1": {
 		text: "You wake up, alone within a dark room",
 		audio: "V_01",
@@ -20,6 +27,12 @@ let phraseData = {
 		empty: false
 	},
 	"2b": {
+		text: "not",
+		audio: "V_Not",
+		draggable: true,
+		empty: false
+	},
+	"2c": {
 		text: "open",
 		audio: "V_02_End",
 		draggable: false,
@@ -40,22 +53,15 @@ let phraseData = {
 		empty: false
 	},
 	"4b": {
-		text: "blocking your way.",
-		audio: "V_04_End",
-		draggable: false,
-		empty: false
-	},
-
-	"empty": {
 		text: "<empty>",
 		audio: undefined,
 		draggable: true,
 		empty: true
 	},
-	"not": {
-		text: "not",
-		audio: "V_Not",
-		draggable: true,
+	"4c": {
+		text: "blocking your way.",
+		audio: "V_04_End",
+		draggable: false,
 		empty: false
 	},
 };
@@ -67,7 +73,7 @@ let areaData = {
 	},
 	"2": {
 		hitarea: {x:400, y:100, w:100, h:100},
-		phrases: ["2a", "not", "2b"]
+		phrases: ["2a", "2b", "2c"]
 	},
 	"3": {
 		hitarea: {x:700, y:100, w:100, h:100},
@@ -75,7 +81,7 @@ let areaData = {
 	},
 	"4": {
 		hitarea: {x:1000, y:100, w:100, h:100},
-		phrases: ["4a", "empty", "4b"]
+		phrases: ["4a", "4b", "4c"]
 	},
 };
 
