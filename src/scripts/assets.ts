@@ -6,7 +6,6 @@ interface Image {
 	path: string;
 }
 const images: Image[] = prependPath("assets/images/", [
-	{ key: "player",	path: "player.png" },
 	{ key: "background",	path: "background.png" },
 ]);
 
@@ -30,6 +29,15 @@ interface Audio {
 	volume: number;
 }
 const audio: Audio[] = prependPath("assets/audio/", [
+	{ key: "Amb_Dungeon",	path: "Amb_Dungeon.mp3",	volume: 1.0 },
+	{ key: "Char_Step_01",	path: "Char_Step_01.mp3",	volume: 1.0 },
+	{ key: "Char_Step_02",	path: "Char_Step_02.mp3",	volume: 1.0 },
+	{ key: "Char_Step_03",	path: "Char_Step_03.mp3",	volume: 1.0 },
+	{ key: "Char_Step_04",	path: "Char_Step_04.mp3",	volume: 1.0 },
+	{ key: "Nar_Static",	path: "Nar_Static.mp3",		volume: 1.0 },
+	{ key: "UI_PickUp",		path: "UI_PickUp.mp3",		volume: 1.0 },
+	{ key: "UI_PutDown",	path: "UI_PutDown.mp3",		volume: 1.0 },
+
 	{ key: "V_01",			path: "V_01.mp3",			volume: 1.0 },
 	{ key: "V_02_End",		path: "V_02_End.mp3",		volume: 1.0 },
 	{ key: "V_02_Start",	path: "V_02_Start.mp3",		volume: 1.0 },
