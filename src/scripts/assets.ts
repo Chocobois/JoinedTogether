@@ -19,10 +19,27 @@ interface SpriteSheet {
 }
 
 const spritesheets: SpriteSheet[] = prependPath("assets/spritesheets/", [
-	{ key: 'mouse',		path: 'mouse.png',	width: 256,	height: 200 }
+	{ key: 'mouse',		path: 'mouse.png',	width: 256,	height: 200 },
+	{ key: 'cat',		path: 'cat.png',	width: 256,	height: 256 },
 ]);
 
 
-// const audio: Asset[] = prependPath("assets/audio/", []);
+interface Audio {
+	key: string;
+	path: string;
+	volume: number;
+}
 
-export { images, spritesheets };
+const audio: Audio[] = prependPath("assets/audio/", [
+	{ key: "V_01",			path: "V_01.mp3",			volume: 1.0 },
+	{ key: "V_02_End",		path: "V_02_End.mp3",		volume: 1.0 },
+	{ key: "V_02_Start",	path: "V_02_Start.mp3",		volume: 1.0 },
+	{ key: "V_03",			path: "V_03.mp3",			volume: 1.0 },
+	{ key: "V_04_End",		path: "V_04_End.mp3",		volume: 1.0 },
+	{ key: "V_04_Start",	path: "V_04_Start.mp3",		volume: 1.0 },
+	{ key: "V_Not",			path: "V_Not.mp3",			volume: 1.0 },
+]);
+
+
+
+export { images, spritesheets, audio };

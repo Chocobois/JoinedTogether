@@ -1,7 +1,7 @@
 import { BaseScene } from "./BaseScene";
 import { GrayScalePostFilter } from "../pipelines/GrayScalePostFilter";
 import { BlurPostFilter } from "../pipelines/BlurPostFilter";
-import { images, spritesheets } from "../assets";
+import { images, spritesheets, audio } from "../assets";
 
 export class PreloadScene extends BaseScene {
 	constructor() {
@@ -39,9 +39,14 @@ export class PreloadScene extends BaseScene {
 			this.load.image(asset.key, asset.path);
 		}
 
-		// Load images
+		// Load spritesheets
 		for (let asset of spritesheets) {
 			this.load.spritesheet(asset.key, asset.path, { frameWidth: asset.width, frameHeight: asset.height });
+		}
+
+		// Load audio
+		for (let asset of audio) {
+			this.load.audio(asset.key, [asset.path]);
 		}
 	}
 

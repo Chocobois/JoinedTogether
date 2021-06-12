@@ -11,7 +11,7 @@ export class Player extends Phaser.GameObjects.Container {
 		this.scene = scene;
 		this.scene.add.existing(this);
 
-		this.sprite = this.scene.add.sprite(0, 0, "mouse", 0);
+		this.sprite = this.scene.add.sprite(0, 0, "cat", 0);
 		this.sprite.setScale(0.5);
 		this.add(this.sprite);
 
@@ -29,7 +29,7 @@ export class Player extends Phaser.GameObjects.Container {
 			this.play('walk', true);
 
 			if (input.x != 0) {
-				this.scaleX = input.x;
+				this.scaleX = -input.x;
 			}
 		}
 
@@ -45,8 +45,8 @@ export class Player extends Phaser.GameObjects.Container {
 		this.scene.anims.create({
 			key: 'idle',
 			frames: [
-				{key: 'mouse', frame: 0, duration: 300},
-				{key: 'mouse', frame: 1, duration: 300},
+				{key: 'cat', frame: 0, duration: 300},
+				{key: 'cat', frame: 1, duration: 300},
 			],
 			repeat: -1
 		});
@@ -54,8 +54,8 @@ export class Player extends Phaser.GameObjects.Container {
 		this.scene.anims.create({
 			key: 'walk',
 			frames: [
-				{key: 'mouse', frame: 2, duration: 100},
-				{key: 'mouse', frame: 3, duration: 100},
+				{key: 'cat', frame: 2, duration: 100},
+				{key: 'cat', frame: 3, duration: 100},
 			],
 			repeat: -1
 		});
