@@ -1,6 +1,7 @@
 import { BaseScene } from "./BaseScene";
 import { AudioManager } from "../AudioManager";
 import { Player } from "../components/Player";
+import { Monster } from "../components/Monster";
 import { Narrator } from "../components/Narrator";
 import { Phrase, phraseData, areaData } from "../components/Phrase";
 import { World } from "../components/World";
@@ -8,6 +9,7 @@ import { World } from "../components/World";
 export class GameScene extends BaseScene {
 	private audio: AudioManager;
 	public player: Player;
+	public monsters: Monster[];
 	private world: World;
 	private narrator: Narrator;
 	private keys: any;
@@ -56,6 +58,7 @@ export class GameScene extends BaseScene {
 		this.zoneTimer -= 0.1;
 		if (this.zoneTimer <= 0) {
 			this.currentZone = undefined;
+			this.narrator.onDragEnd();
 		}
 	}
 
