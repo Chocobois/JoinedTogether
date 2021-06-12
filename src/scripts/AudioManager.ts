@@ -27,11 +27,9 @@ export class AudioManager {
 	play(key: string) {
 		let audio = this.sounds.get(key);
 		if (audio) {
-			// audio.play();
-			audio.play("", { volume: 0.5, rate: 0.5 });
+			audio.play({ volume: 0.5, rate: 1.0 });
 		}
 
-		// mute
 		// volume
 		// rate
 		// detune

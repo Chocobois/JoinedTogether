@@ -1,10 +1,12 @@
 import { BaseScene } from "./BaseScene";
 import { AudioManager } from "../AudioManager";
 import { Player } from "../components/Player";
+import { Narrator } from "../components/Narrator";
 
 export class GameScene extends BaseScene {
 	private audio: AudioManager;
-	private player: Player;
+	public player: Player;
+	private narrator: Narrator;
 	private keys: any;
 
 	constructor() {
@@ -31,22 +33,26 @@ export class GameScene extends BaseScene {
 		this.player = new Player(this, 0.3*this.W, this.CY);
 
 
+		/* Narrator */
+
+		this.narrator = new Narrator(this, this.CX, 0.85*this.H);
+
+
 		/* Audio */
 
 		this.audio = new AudioManager(this, this.CX, 0.85*this.H);
 
-		this.audio.play("V_01");
-		// V_01			You wake up, alone within a dark room.
+		// this.audio.play("V_01"); // You wake up, alone within a dark room.
 
-		// V_02_Start	In front of you lies a door, which is--
-		// V_Not		[not]
-		// V 02_End		--open.
+		// this.audio.play("V_02_Start"); // In front of you lies a door, which is--
+		// this.audio.play("V_Not"); // [not]
+		// this.audio.play("V_02_End"); // --open.
 
-		// V_03			After heading through the door, you come across a tunnel.
+		// this.audio.play("V_03"); // After heading through the door, you come across a tunnel.
 
-		// V_04_Start	A dense buildup of cobwebs are--
-		// V_Not		[not]
-		// V_04_End		--blocking your way.
+		// this.audio.play("V_04_Start"); // A dense buildup of cobwebs are--
+		// this.audio.play("V_Not"); // [not]
+		// this.audio.play("V_04_End"); // --blocking your way.
 
 
 		/* Input */
@@ -56,6 +62,7 @@ export class GameScene extends BaseScene {
 
 	update(time: number, deltaMs: number): void {
 		this.player.update(time, deltaMs);
+		this.narrator.update(time, deltaMs);
 	}
 
 
