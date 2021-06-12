@@ -6,7 +6,8 @@ interface Image {
 	path: string;
 }
 const images: Image[] = prependPath("assets/images/", [
-	{ key: "background",	path: "background.png" },
+	{ key: "halfdoorlock",	path: "halfdoorlock.png" },
+	{ key: "halfdooropen",	path: "halfdooropen.png" },
 ]);
 
 
@@ -19,6 +20,7 @@ interface SpriteSheet {
 const spritesheets: SpriteSheet[] = prependPath("assets/spritesheets/", [
 	{ key: 'mouse',		path: 'mouse.png',		width: 256,	height: 200 },
 	{ key: 'cat',		path: 'cat.png',		width: 256,	height: 256 },
+	{ key: 'monster',	path: 'monster.png',	width: 256,	height: 256 },
 	{ key: 'thought',	path: 'thought.png',	width: 370,	height: 172 },
 ]);
 

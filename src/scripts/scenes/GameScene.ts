@@ -23,15 +23,8 @@ export class GameScene extends BaseScene {
 		// Note: "fade", "CX", "CY", "containToScreen" is found in BaseScene
 
 		// Background color and fading animation
-		this.cameras.main.setBackgroundColor(0xFFFFFF);
+		this.cameras.main.setBackgroundColor(0x000000);
 		this.fade(false, 200, 0x000000);
-
-
-		/* Background */
-
-		let bg = this.add.image(this.CX, this.CY, "background");
-		bg.setAlpha(0.1);
-		this.containToScreen(bg);
 
 
 		/* World */
