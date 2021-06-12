@@ -40,7 +40,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.dragWord = new DragWord(this.scene, {
 			fontFamily: "LatoRegular",
 			fontSize: "30px",
-			color: "#000"
+			color: "#FFF"
 		});
 		this.makeDraggable();
 		this.scene.add.existing(this.dragWord);
@@ -75,7 +75,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 		let word = new Word(this.scene, {
 			fontFamily: "LatoRegular",
 			fontSize: "30px",
-			color: "#000"
+			color: "#FFF"
 		});
 		this.makeSelectable(word);
 		return word;
