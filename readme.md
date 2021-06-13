@@ -1,4 +1,4 @@
-# JoinedTogetherGame
+# Cat Got Your Tongue
 
 GMTK Game Jam 2021
 

@@ -1,5 +1,5 @@
 {
-  "name": "JoinedTogether",
+  "name": "CatGotYourTongue",
   "version": "1.0.0",
   "description": "GMTK Game Jam 2021",
   "main": "build/main.js",
@@ -12,8 +12,8 @@
   },
   "homepage": "https://github.com/Golen87/JoinedTogether",
   "build": {
-    "appId": "joinedtogether",
-    "productName": "Joined Together",
+    "appId": "CatGotYourTongue",
+    "productName": "Cat Got Your Tongue",
     "mac": {
       "category": "your.app.category.type"
     },
