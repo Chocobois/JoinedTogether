@@ -36,8 +36,8 @@ export class Word extends Phaser.GameObjects.Text {
 			}
 		}
 
-		// const k = 1;
-		// this.input.hitArea.setTo(-k, -k, this.width+2*k, this.height+2*k);
+		const k = 30;
+		this.input.hitArea.setTo(-k, -k, this.width+2*k, this.height+2*k);
 	}
 
 	onDropzone() {

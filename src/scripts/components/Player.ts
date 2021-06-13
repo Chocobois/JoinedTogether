@@ -69,7 +69,7 @@ export class Player extends Phaser.GameObjects.Container {
 			this.prevFrame = this.sprite.frame.name;
 
 			if (input.x != 0) {
-				this.sprite.scaleX = 0.5 * input.x;
+				this.sprite.scaleX = 0.5 * (input.x > 0 ? 1 : -1);
 			}
 		}
 

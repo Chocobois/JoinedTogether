@@ -73,6 +73,8 @@ export class Narrator extends Phaser.GameObjects.Container {
 			thoughtType = this.thoughtWord.phrase.type;
 		}
 
+		this.checkPointerOver();
+
 		this.dropzone = undefined;
 		this.words.forEach((word: Word) => {
 			if (word.phrase) {
@@ -151,19 +153,70 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.bg.scaleX = (80 + totalWidth) / this.bg.width;
 	}
 
-	makeSelectable(word: Word) {
-		word.setInteractive({ useHandCursor: true });
-
-		word.on("pointerover", (pointer: Phaser.Input.Pointer, localX: number, localY: number, event: Phaser.Types.Input.EventData) => {
-			if (!this.selected && !word.empty) {
-				this.dragWord.x = word.x;
-				this.dragWord.y = word.y;
-				this.dragWord.setScale(word.scaleX);
-				this.dragWord.setText(word.phrase.text);
-				this.dragWord.setVisible(true);
-
-				this.selected = word;
+	checkPointerOver() {
+		let anyFound = false;
+		for (let word of this.words) {
+			if (word.input.enabled && Phaser.Geom.Rectangle.Contains(word.input.hitArea, this.scene.input.x-word.x, this.scene.input.y-word.y+word.displayHeight/2)) {
+				this.pointerOver(word);
+				anyFound = true;
 			}
+		}
+		if (this.thoughtWord.input.enabled && Phaser.Geom.Rectangle.Contains(this.thoughtWord.input.hitArea, this.scene.input.x-this.thoughtWord.x, this.scene.input.y-this.thoughtWord.y+this.thoughtWord.displayHeight/2)) {
+			this.pointerOver(this.thoughtWord);
+			anyFound = true;
+		}
+		if (!anyFound && !this.dragWord.drag) {
+			this.onDragEnd();
+		}
+	}
+
+	pointerOver(word: Word) {
+		console.log("PointerOver", word.text);
+		if (!this.selected && !word.empty) {
+			this.dragWord.x = word.x;
+			this.dragWord.y = word.y;
+			this.dragWord.setScale(word.scaleX);
+			this.dragWord.setText(word.phrase.text);
+			this.dragWord.setVisible(true);
+
+			this.selected = word;
+		}
+	}
+
+	makeSelectable(word: Word) {
+		word.setInteractive({ useHandCursor: true, draggable: true });
+		// this.scene.input.enableDebug(word);
+
+		// word.on("pointerover", (pointer: Phaser.Input.Pointer, localX: number, localY: number, event: Phaser.Types.Input.EventData) => {
+		// 	console.log("word", "pointerover");
+		// 	if (!this.selected && !word.empty) {
+		// 		this.dragWord.x = word.x;
+		// 		this.dragWord.y = word.y;
+		// 		this.dragWord.setScale(word.scaleX);
+		// 		this.dragWord.setText(word.phrase.text);
+		// 		this.dragWord.setVisible(true);
+
+		// 		this.selected = word;
+		// 	}
+		// });
+
+		const distance = 20;
+		word.on("dragstart", (pointer, dragX, dragY) => {
+			this.dragWord.lock = true;
+			this.dragWord.dragOffsetX = this.x;
+			this.dragWord.dragOffsetY = this.y;
+			this.dragWord.dragX = pointer.x;
+			this.dragWord.dragY = pointer.y;
+		});
+		word.on("drag", (pointer, dragX, dragY) => {
+			if (this.dragWord.lock && (Math.abs(pointer.x - this.dragWord.dragX) > distance || Math.abs(pointer.y - this.dragWord.dragY) > distance)) {
+				this.onDragStart();
+			}
+			this.dragWord.goalX = dragX + this.dragWord.dragOffsetX;
+			this.dragWord.goalY = dragY + this.dragWord.dragOffsetY;
+		});
+		word.on("dragend", () => {
+			this.onDragEnd();
 		});
 	}
 
@@ -180,9 +233,10 @@ export class Narrator extends Phaser.GameObjects.Container {
 	}
 
 	makeDraggable() {
-		this.dragWord.setInteractive({ useHandCursor: true, draggable: true });
-		const distance = 20;
+		// this.dragWord.setInteractive({ useHandCursor: true, draggable: true });
+		// const distance = 20;
 
+		/*
 		this.dragWord.on("pointerdown", () => {
 			this.dragWord.lock = true;
 		});
@@ -193,6 +247,8 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.dragWord.on("pointerup", () => {
 			this.dragWord.lock = false;
 		});
+		*/
+		/*
 		this.dragWord.on("dragstart", (pointer, dragX, dragY) => {
 			this.dragWord.dragOffsetX = this.x;
 			this.dragWord.dragOffsetY = this.y;
@@ -206,9 +262,10 @@ export class Narrator extends Phaser.GameObjects.Container {
 			this.dragWord.goalX = dragX + this.dragWord.dragOffsetX;
 			this.dragWord.goalY = dragY + this.dragWord.dragOffsetY;
 		});
-		this.dragWord.on("dragend", (pointer, dragX, dragY, dropped) => {
+		this.dragWord.on("dragend", () => {
 			this.onDragEnd();
 		});
+		*/
 	}
 
 	onDragStart() {

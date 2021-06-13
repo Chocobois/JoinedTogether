@@ -22,6 +22,7 @@ export class GameScene extends BaseScene {
 	private storyMode: string;
 	private pointer: Phaser.GameObjects.Image;
 	private curve: Phaser.Curves.CubicBezier;
+	private mouseInput: Phaser.Math.Vector2;
 
 	constructor() {
 		super({key: "GameScene"});
@@ -146,6 +147,16 @@ export class GameScene extends BaseScene {
 		for (let name in this.monsters) {
 			this.monsters[name].update(time, delta);
 		}
+
+		//  Movement input
+		this.mouseInput.reset();
+		const pointer = this.input.activePointer;
+		if (pointer.isDown && !this.narrator.dragWord.visible) {
+			this.mouseInput.set(
+				pointer.x - this.CX,
+				pointer.y - this.CY
+			);
+		}
 	}
 
 
@@ -220,6 +231,8 @@ export class GameScene extends BaseScene {
 			A: 'A',
 			D: 'D'
 		});
+
+		this.mouseInput = new Phaser.Math.Vector2(0, 0);
 	}
 
 	get left() {
@@ -240,10 +253,20 @@ export class GameScene extends BaseScene {
 
 	getInputDirection() {
 		if (!this.narrator.dragWord.drag) {
-			return {
-				x: (-1 * this.left) + (1 * this.right),
-				y: (-1 * this.up) + (1 * this.down),
-			};
+			if (this.mouseInput.length() < 30) {
+				this.mouseInput.reset();
+				this.mouseInput.x += (-1 * this.left) + (1 * this.right);
+				this.mouseInput.y += (-1 * this.up) + (1 * this.down);
+			}
+			else {
+				this.mouseInput.scale(6/this.W);
+			}
+
+			if (this.mouseInput.length() > 1) {
+				this.mouseInput.setLength(1);
+			}
+
+			return this.mouseInput;
 		}
 		else {
 			return {
