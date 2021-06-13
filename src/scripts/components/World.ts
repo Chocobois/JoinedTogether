@@ -1,8 +1,8 @@
 import { GameScene } from "../scenes/GameScene";
-import { tiles } from "../assets"
 
 export class World extends Phaser.GameObjects.Container {
 	public scene: GameScene;
+  public properties: {}
 
   private world: Phaser.Tilemaps.Tilemap;
 
@@ -13,12 +13,26 @@ export class World extends Phaser.GameObjects.Container {
 
     this.world = scene.make.tilemap({ key: 'map' });
 
-    let tileset: Phaser.Tilemaps.Tileset[] = [];
-    for( let name of tiles )
+    let properties = {};
+    for( let index in this.world.properties )
     {
-      tileset.push(this.world.addTilesetImage(name.key + ".png", name.key));
+      let prop = this.world.properties[index];
+      properties[prop.name] = prop.value;
     }
-    let layer = this.world.createLayer('Background', tileset, 0, 0);
-    layer.setScale(3);
+
+    let tileset: Phaser.Tilemaps.Tileset[] = [];
+    for( let tile of this.world.tilesets )
+      tileset.push(this.world.addTilesetImage(tile.name, tile.name));
+
+    let scale = properties["Scale"];
+
+    let layer = this.world.createLayer('Background', tileset);
+    layer.setPosition(layer.x*scale,layer.y*scale);
+    layer.setScale(scale);
+
+    /*
+    let layer2 = this.world.createLayer('Foreground', tileset);
+    layer2.setX(100);
+    */
   }
 }

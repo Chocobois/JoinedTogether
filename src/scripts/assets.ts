@@ -10,15 +10,19 @@ let loadImg = (name: string): Image => {
 	return { key: name, path: name + ".png" }
 }
 
+let loadTile = (name: string): Image => {
+	return { key: name + ".png", path: name + ".png" }
+}
+
 const images: Image[] = prependPath("assets/images/", [
 	loadImg("halfdoorlock"),
 	loadImg("halfdooropen")
 ]);
 
 const tiles: Image[] = prependPath("assets/tilemaps/", [
-	loadImg("roof"),
-	loadImg("floor"),
-	loadImg("wall")
+	loadTile("roof"),
+	loadTile("floor"),
+	loadTile("wall")
 ]);
 
 interface SpriteSheet {
