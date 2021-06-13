@@ -36,7 +36,7 @@ export class GameScene extends BaseScene {
 		this.player = new Player(this, 0.3*this.W, this.CY);
 		// this.player.setScrollFactor(0, 0);
 		this.physics.world.enable(this.player.sprite);
-		this.cameras.main.startFollow(this.player);
+		this.cameras.main.startFollow(this.player.sprite);
 
 		// Narrator
 		this.narrator = new Narrator(this, this.CX, 0.85*this.H);
@@ -46,6 +46,7 @@ export class GameScene extends BaseScene {
 		this.audio = new AudioManager(this, this.CX, 0.85*this.H);
 
 		this.createAreaTriggers();
+		this.world.wallInPlayer(this.player);
 
 		this.setupInput();
 	}

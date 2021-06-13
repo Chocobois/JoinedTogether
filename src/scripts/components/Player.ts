@@ -3,18 +3,18 @@ import { GameScene } from "../scenes/GameScene";
 export class Player extends Phaser.GameObjects.Container {
 	public scene: GameScene;
 
-	public sprite: Phaser.GameObjects.Sprite;
+	public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 	public thoughtBubble: Phaser.GameObjects.Sprite;
 	public isAsleep: boolean;
 	// private thoughtText: Phaser.GameObjects.Text;
 	private walkSpeed: number;
 
 	constructor(scene: GameScene, x: number, y: number) {
-		super(scene, x, y);
+		super(scene, 0, 0);
 		this.scene = scene;
 		this.scene.add.existing(this);
 
-		this.sprite = this.scene.add.sprite(0, 0, "cat", 0);
+		this.sprite = scene.physics.add.sprite(x, y, "cat", 0);;
 		this.sprite.setScale(0.5);
 		this.add(this.sprite);
 
@@ -23,7 +23,7 @@ export class Player extends Phaser.GameObjects.Container {
 		this.walkSpeed = 5;
 
 
-		this.thoughtBubble = this.scene.add.sprite(0, -40, "thought", 0);
+		this.thoughtBubble = this.scene.add.sprite(x, y-40, "thought", 0);
 		this.thoughtBubble.setOrigin(0.5, 1);
 		this.thoughtBubble.setScale(0.5);
 		this.thoughtBubble.setVisible(false);
@@ -56,8 +56,11 @@ export class Player extends Phaser.GameObjects.Container {
 		}
 
 		if (!this.isAsleep) {
-			this.x += input.x * this.walkSpeed;
-			this.y += input.y * this.walkSpeed;
+			this.sprite.body.setVelocityX(200 * input.x);
+			this.sprite.body.setVelocityY(200 * input.y);
+
+			this.thoughtBubble.x = this.sprite.x;
+			this.thoughtBubble.y = this.sprite.y-40;
 		}
 	}
 
