@@ -2,7 +2,7 @@ import { GameScene } from "../scenes/GameScene";
 
 export class Monster extends Phaser.GameObjects.Container {
 	public scene: GameScene;
-	public sprite: Phaser.GameObjects.Sprite;
+	public sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 	public mood: string;
 
 	constructor(scene: GameScene, x: number, y: number) {
@@ -10,9 +10,13 @@ export class Monster extends Phaser.GameObjects.Container {
 		this.scene = scene;
 		this.scene.add.existing(this);
 
-		this.sprite = this.scene.add.sprite(0, 0, "monster", 0);
+		// this.sprite = this.scene.add.sprite(0, 0, "monster", 0);
+		this.sprite = scene.physics.add.sprite(0, 0, "monster", 0);
 		this.sprite.setScale(0.5);
 		this.sprite.setTint(0xb7adc7);
+		this.sprite.body.immovable = true;
+		let size = 1.8*this.sprite.displayWidth;
+		this.sprite.body.setSize(size, size);
 		this.add(this.sprite);
 
 		this.mood = "idle";
@@ -38,6 +42,8 @@ export class Monster extends Phaser.GameObjects.Container {
 				this.play('monster_idle', true);
 			}
 		}
+
+		this.sprite.body.enable = !(["dead", "sleeping", "scared"].includes(this.mood));
 	}
 
 	play(key, ignoreIfPlaying=false) {

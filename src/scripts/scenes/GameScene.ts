@@ -38,26 +38,37 @@ export class GameScene extends BaseScene {
 		this.world = new World(this, 0,0);
 
 		// Player
-		this.player = new Player(this, areaData.sleep.hitarea.x, areaData.sleep.hitarea.y - 40);
+		let area = "sleep";
+		this.player = new Player(this, areaData[area].hitarea.x, areaData[area].hitarea.y - 40);
 		this.player.setDepth(5);
 		// this.player.setScrollFactor(0, 0);
 
 		this.physics.world.enable(this.player.sprite);
 		this.cameras.main.startFollow(this.player.sprite);
 
+		this.physics.add.collider(this.player.sprite, this.world.wallLayer);
+
+
 		// Monsters
 		this.monsters = {
-			guard: new Monster(this, areaData.guard.hitarea.x, areaData.guard.hitarea.y),
-			scared: new Monster(this, areaData.scared.hitarea.x, areaData.scared.hitarea.y),
-			angry: new Monster(this, areaData.angry.hitarea.x, areaData.angry.hitarea.y),
-			murder: new Monster(this, areaData.murder.hitarea.x, areaData.murder.hitarea.y),
-			pesky: new Monster(this, areaData.pesky.hitarea.x, areaData.pesky.hitarea.y),
-			clever: new Monster(this, areaData.clever.hitarea.x, areaData.clever.hitarea.y),
+			guard: new Monster(this, areaData.guard.hitarea.x, areaData.guard.hitarea.y-280),
+			angry: new Monster(this, areaData.angry.hitarea.x-130, areaData.angry.hitarea.y-20),
+			scared: new Monster(this, areaData.scared.hitarea.x+300, areaData.scared.hitarea.y+30),
+			murder: new Monster(this, areaData.murder.hitarea.x+300, areaData.murder.hitarea.y),
+			// pesky: new Monster(this, areaData.pesky.hitarea.x, areaData.pesky.hitarea.y),
+			// clever: new Monster(this, areaData.clever.hitarea.x, areaData.clever.hitarea.y),
 		};
+
+		for (let name in this.monsters) {
+			this.physics.add.collider(this.player.sprite, this.monsters[name].sprite);
+			// this.physics.world.enable(this.monsters].sprite);
+		}
 
 		// Flowers
 		this.flowers = {
-			lifeless: new Flower(this, areaData.flower.hitarea.x, areaData.flower.hitarea.y, "flower", 0),
+			lifeless: new Flower(this, areaData.flower.hitarea.x+20, areaData.flower.hitarea.y-100, "flower", 0),
+			dead1: new Flower(this, areaData.angry.hitarea.x+70, areaData.angry.hitarea.y-230, "flower", 1),
+			dead2: new Flower(this, areaData.angry.hitarea.x-150, areaData.angry.hitarea.y-260, "flower", 1),
 		};
 
 		// Light
@@ -161,21 +172,21 @@ export class GameScene extends BaseScene {
 
 
 	checkTriggers() {
-		this.player.mood = phraseData.sleep_whois.trigger || "idle";
+		this.player.mood = phraseData.sleep_whois.trigger || phraseData.angry_mood1.trigger || "idle";
 
 		this.monsters.guard.mood = phraseData.guard_whois.trigger || "angry";
 
 		this.monsters.scared.mood = phraseData.scared_whois.trigger || "idle";
-		if (this.player.mood == "angry" && this.monsters.scared.mood != "asleep")
+		if (this.player.mood == "angry" && this.monsters.scared.mood != "sleeping")
 			this.monsters.scared.mood = "scared";
 
-		this.monsters.angry.mood = phraseData.angry_whois.trigger || "idle";
+		this.monsters.angry.mood = phraseData.angry_mood2.trigger || "idle";
 
 		this.monsters.murder.mood = phraseData.murder_ending.trigger || "idle";
 
-		this.monsters.pesky.mood = phraseData.pesky_escape.trigger || "idle";
+		// this.monsters.pesky.mood = phraseData.pesky_escape.trigger || "idle";
 
-		this.monsters.clever.mood = phraseData.clever_escape.trigger || "idle";
+		// this.monsters.clever.mood = phraseData.clever_escape.trigger || "idle";
 
 		this.flowers.lifeless.setFrame((phraseData.flower_ending.trigger == "dead") ? 1 : 0);
 	}

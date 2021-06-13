@@ -4,7 +4,7 @@ export class Flower extends Phaser.GameObjects.Image {
 		scene.add.existing(this);
 
 		this.setScale(0.5);
-		this.setFrame(0);
+		this.setFrame(frame);
 		this.setTint(0xAACCFF);
 	}
 }

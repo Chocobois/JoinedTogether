@@ -18,11 +18,10 @@ export class Word extends Phaser.GameObjects.Text {
 		this.setScrollFactor(0, 0);
 	}
 
-	update(isDragging: boolean, selected: any, allowedDrop: boolean) {
+	update(isDragging: boolean, allowedDrop: boolean) {
 		if (this.phrase && this.phrase.draggable) {
 			if (this.phrase.empty) {
 				this.setStroke("#FFAA00", 4);
-				// if (/*isDragging &&*/(allowedDrop || this.phrase.type == selected.phrase.type || !this.phrase.type || !selected.phrase.type)) {
 				if (allowedDrop) {
 					this.setText("_____");
 				}
@@ -75,8 +74,4 @@ export class Word extends Phaser.GameObjects.Text {
 	get empty() {
 		return this.phrase.empty;
 	}
-
-	// get type() {
-		// return this.phrase.type;
-	// }
 }

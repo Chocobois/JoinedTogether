@@ -16,9 +16,16 @@ export class Player extends Phaser.GameObjects.Container {
 		this.scene = scene;
 		this.scene.add.existing(this);
 
-		this.sprite = scene.physics.add.sprite(x, y, "cat", 0);;
+		this.sprite = scene.physics.add.sprite(x, y, "cat", 0);
 		this.sprite.setScale(0.5);
 		this.add(this.sprite);
+
+		// this.sprite.body.setBoundsRectangle(new Phaser.Geom.Rectangle(0, 0, 20, 20));
+		// this.sprite.body.setSize(this.sprite.displayWidth, this.sprite.displayHeight);
+		let size = 0.7*this.sprite.displayWidth
+		this.sprite.body.setCircle(size, size/2, 0.8*size);
+		// let rect = new Phaser.Types.Physics.Arcade.ArcadeBodyBounds();
+		// console.log(this.sprite.body.getBounds);
 
 		this.setupAnimations();
 		this.walkSpeed = 400;

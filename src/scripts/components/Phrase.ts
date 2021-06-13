@@ -18,8 +18,6 @@ let phraseData: any = {
 	// Cat sleeping
 	"sleep_1": {
 		text: "Deep in a dungeon, there is",
-		draggable: false,
-		empty: false
 	},
 	"sleep_not": {
 		text: "<empty>",
@@ -30,22 +28,22 @@ let phraseData: any = {
 	},
 	"sleep_2": {
 		text: "a cat",
-		draggable: false,
-		empty: false
 	},
 	"sleep_whois": {
 		text: "who is asleep",
 		draggable: true,
-		empty: false,
 		trigger: "sleeping",
 		type: "who is"
+	},
+
+	// Story
+	"story_after_sleep": {
+		text: "Yet through sheer will, it changed the story",
 	},
 
 	// Enemy guarding
 	"guard_1": {
 		text: "A mean monster",
-		draggable: false,
-		empty: false
 	},
 	"guard_whois": {
 		text: "<empty>",
@@ -55,15 +53,35 @@ let phraseData: any = {
 	},
 	"guard_2": {
 		text: "is guarding the room",
-		draggable: false,
-		empty: false
+	},
+
+	// Angry monster
+
+	"angry_1": {
+		text: "The",
+	},
+	"angry_mood1": {
+		text: "<empty>",
+		draggable: true,
+		empty: true,
+		type: "mood"
+	},
+	"angry_2": {
+		text: "cat meets another",
+	},
+	"angry_mood2": {
+		text: "angry",
+		draggable: true,
+		type: "mood",
+		trigger: "angry"
+	},
+	"angry_3": {
+		text: "monster",
 	},
 
 	// Monster scared of cat
 	"scared_1": {
 		text: "The guarding monster",
-		draggable: false,
-		empty: false
 	},
 	"scared_whois": {
 		text: "<empty>",
@@ -73,39 +91,15 @@ let phraseData: any = {
 	},
 	"scared_2": {
 		text: "is scared of angry cats",
-		draggable: false,
-		empty: false
-	},
-
-	// Random angry monster
-	"angry_1": {
-		text: "A monster",
-		draggable: false,
-		empty: false
-	},
-	"angry_whois": {
-		text: "who is angry",
-		draggable: true,
-		empty: false,
-		type: "who is",
-		trigger: "angry"
-	},
-	"angry_2": {
-		text: "is minding his own business",
-		draggable: false,
-		empty: false
 	},
 
 	// Lifeless flower
 	"flower_1": {
 		text: "Nothing here aside from a small flower",
-		draggable: false,
-		empty: false
 	},
 	"flower_ending": {
 		text: "but sadly it is lifeless",
 		draggable: true,
-		empty: false,
 		type: "ending",
 		trigger: "dead"
 	},
@@ -113,8 +107,6 @@ let phraseData: any = {
 	// Lifeless monster
 	"murder_1": {
 		text: "Another mean monster blocks your path",
-		draggable: false,
-		empty: false
 	},
 	"murder_ending": {
 		text: "<empty>",
@@ -126,81 +118,76 @@ let phraseData: any = {
 	// Door
 	// "door_1": {
 	// 	text: "Before long, there",
-	// 	draggable: false,
-	// 	empty: false
 	// },
 	// "door_2": {
 	// 	text: "which will hurt",
 	// 	draggable: true,
-	// 	empty: false,
 	// 	type: "hurt"
 	// },
 
 	// mouth
 	"pesky_1": {
 		text: "The pesky cat thought it was being clever by",
-		draggable: false,
-		empty: false
 	},
 	"pesky_escape": {
 		text: "putting words in my mouth",
 		draggable: true,
-		empty: false,
 		type: "escape"
 	},
 
 	// Too bad it will never be escaping like a hero any time soon
 	// Ending
 	"clever_1": {
-		text: "Haha! Too bad it will never be",
-		draggable: false,
-		empty: false
+		text: "Thanks for playing!",
 	},
-	"clever_escape": {
-		text: "escaping",
-		draggable: true,
-		empty: false,
-		type: "escape"
-	},
-	"clever_2": {
-		text: "any time soon",
-		draggable: false,
-		empty: false
-	},
+	// "clever_escape": {
+		// text: "escaping",
+		// draggable: true,
+		// type: "escape"
+	// },
+	// "clever_2": {
+		// text: "any time soon",
+	// },
 };
 
+let k = 800;
+let q = 32*4;
 let areaData = {
 	"sleep": {
-		hitarea: {x:0,    y:0, w:400, h:400},
+		hitarea: {x:0*q, y:0*q, w:300, h:300},
 		phrases: ["sleep_1", "sleep_not", "sleep_2", "sleep_whois"]
 	},
+	"story_after_sleep": {
+		hitarea: {x:6*q, y:0*q, w:200, h:300},
+		phrases: ["story_after_sleep"]
+	},
 	"guard": {
-		hitarea: {x:1000, y:0, w:400, h:400},
+		hitarea: {x:10.5*q, y:-1*q, w:200, h:200},
 		phrases: ["guard_1", "guard_whois", "guard_2"]
 	},
+	"angry": {
+		hitarea: {x:5*q, y:-9*q, w:300, h:300},
+		phrases: ["angry_1", "angry_mood1", "angry_2", "angry_mood2", "angry_3"]
+	},
 	"scared": {
-		hitarea: {x:2000, y:0, w:400, h:400},
+		hitarea: {x:14*q, y:-8.5*q, w:200, h:300},
 		phrases: ["scared_1", "scared_whois", "scared_2"]
 	},
-	"angry": {
-		hitarea: {x:3000, y:0, w:400, h:400},
-		phrases: ["angry_1", "angry_whois", "angry_2"]
-	},
 	"flower": {
-		hitarea: {x:4000, y:0, w:400, h:400},
+		hitarea: {x:23*q, y:-16.5*q, w:300, h:300},
 		phrases: ["flower_1", "flower_ending"]
 	},
 	"murder": {
-		hitarea: {x:5000, y:0, w:400, h:400},
+		hitarea: {x:27*q, y:-12*q, w:200, h:300},
 		phrases: ["murder_1", "murder_ending"]
 	},
 	"pesky": {
-		hitarea: {x:6000, y:0, w:400, h:400},
+		hitarea: {x:34*q, y:-12*q, w:200, h:3000},
 		phrases: ["pesky_1", "pesky_escape"]
 	},
 	"clever": {
-		hitarea: {x:7000, y:0, w:400, h:400},
-		phrases: ["clever_1", "clever_escape", "clever_2"]
+		hitarea: {x:39*q, y:-12*q, w:400, h:3000},
+		phrases: ["clever_1"]
 	},
 };
 

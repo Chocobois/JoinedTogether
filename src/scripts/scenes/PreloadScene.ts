@@ -60,6 +60,7 @@ export class PreloadScene extends BaseScene {
 	}
 
 	create() {
+		// this.scene.start("GameScene");
 		let width = 0.5 * this.W;
 		let x = this.CX + width/2;
 		let y = this.CY;

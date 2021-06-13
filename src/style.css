@@ -28,9 +28,10 @@ canvas {
 	visibility: hidden;
 }
 
-.fontSuplexmentary	{ font-family: 'Suplexmentary'; }
+.fontSuplexmentary	{ font-family: 'Hammersmith One'; }
 
 @font-face {
-	font-family: 'Suplexmentary';
-	src: url('/assets/fonts/Suplexmentary.ttf');
+	font-family: 'Hammersmith One', sans-serif;
+	/*font-family: 'Suplexmentary';*/
+	/*src: url('/assets/fonts/Suplexmentary.ttf');*/
 }

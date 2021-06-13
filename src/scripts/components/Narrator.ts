@@ -26,7 +26,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 
 		// Font
 		this.fontConfig = {
-			fontFamily: "Suplexmentary",
+			fontFamily: "Hammersmith One",
 			fontSize: "28px",
 			color: "#FFF"
 		};
@@ -79,11 +79,17 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.words.forEach((word: Word) => {
 			if (word.phrase) {
 				// console.log(word.type, thoughtType);
-				word.update(this.dragWord.drag, this.selected, thoughtType == word.phrase.type);
+				let allowedDrop = (thoughtType == word.phrase.type);
+				if (this.selected && this.dragWord.drag) {
+					if (word.phrase.type == this.selected.phrase.type) {
+						allowedDrop = true;
+					}
+				}
+				word.update(this.dragWord.drag, allowedDrop);
 				this.checkOverlap(word);
 			}
 		});
-		this.thoughtWord.update(this.dragWord.drag, this.selected, true);
+		this.thoughtWord.update(this.dragWord.drag, true);
 		this.checkOverlap(this.thoughtWord);
 		this.dragWord.update();
 
@@ -171,8 +177,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 	}
 
 	pointerOver(word: Word) {
-		console.log("PointerOver", word.text);
-		if (!this.selected && !word.empty) {
+		if (word.getPhrase() && !this.selected && !word.empty) {
 			this.dragWord.x = word.x;
 			this.dragWord.y = word.y;
 			this.dragWord.setScale(word.scaleX);
