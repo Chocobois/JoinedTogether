@@ -31,7 +31,7 @@ export class DragWord extends Phaser.GameObjects.Text {
 		this.drag = false;
 	}
 
-	update(time: number, delta: number) {
+	update() {
 		if (this.drag) {
 			this.x += (this.goalX - this.x) / 2.0;
 			this.y += (this.goalY - this.y) / 2.0;

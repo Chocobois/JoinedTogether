@@ -85,10 +85,19 @@ export class Player extends Phaser.GameObjects.Container {
 		});
 
 		this.scene.anims.create({
-			key: 'sleeping',
+			key: 'angry',
 			frames: [
 				{key: 'cat', frame: 4, duration: 300},
 				{key: 'cat', frame: 5, duration: 300},
+			],
+			repeat: -1
+		});
+
+		this.scene.anims.create({
+			key: 'sleeping',
+			frames: [
+				{key: 'cat', frame: 6, duration: 300},
+				{key: 'cat', frame: 7, duration: 300},
 			],
 			repeat: -1
 		});

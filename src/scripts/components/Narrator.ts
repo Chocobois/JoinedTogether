@@ -55,12 +55,14 @@ export class Narrator extends Phaser.GameObjects.Container {
 	update(time: number, delta: number) {
 		this.dropzone = undefined;
 		this.words.forEach((word: Word) => {
-			word.update(time, delta);
+			word.update(this.dragWord.drag, this.selected, false);
 			this.checkOverlap(word);
 		});
-		this.thoughtWord.update(time, delta);
+		this.thoughtWord.update(this.dragWord.drag, this.selected, true);
 		this.checkOverlap(this.thoughtWord);
-		this.dragWord.update(time, delta);
+		this.dragWord.update();
+
+		this.repositionText();
 
 		this.thoughtWord.x = this.scene.CX - this.thoughtWord.displayWidth/2;
 		this.thoughtWord.y = this.scene.CY - 117;
@@ -100,18 +102,25 @@ export class Narrator extends Phaser.GameObjects.Container {
 
 	repositionText() {
 		let totalWidth = 0;
-		let spacing = 10;
+		let spacing = 6;
 
 		for (let word of this.words) {
 			if (word.visible) {
 				word.setPosition(this.cX + totalWidth, this.cY);
-				totalWidth += word.width + spacing;
+				if (word.text != "") {
+					totalWidth += word.width + spacing;
+				}
 			}
 		}
 		totalWidth -= spacing;
 
 		for (let word of this.words) {
 			word.x -= totalWidth/2;
+		}
+
+		if (this.selected && !this.dragWord.drag) {
+			this.dragWord.x = this.selected.x;
+			this.dragWord.y = this.selected.y;
 		}
 	}
 
@@ -127,7 +136,6 @@ export class Narrator extends Phaser.GameObjects.Container {
 				this.dragWord.setVisible(true);
 
 				this.selected = word;
-				this.selected.setVisible(false);
 			}
 		});
 	}
@@ -138,7 +146,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 			if (word.draggable && word.empty && this.dragWord.drag && this.selected) {
 				if (Phaser.Geom.Rectangle.Contains(word.input.hitArea, this.scene.input.x-word.x, this.scene.input.y-word.y+word.displayHeight/2)) {
 					this.dropzone = word;
-					word.setStroke("#00FF00", 4);
+					word.onDropzone();
 				}
 			}
 		}
@@ -196,6 +204,9 @@ export class Narrator extends Phaser.GameObjects.Container {
 				// this.selected.setPhrase(this.dropzone.getPhrase());
 				// this.dropzone.setPhrase(phrase);
 				this.swapPhrases(this.selected.phrase, this.dropzone.phrase);
+				if (this.dropzone == this.thoughtWord) {
+					this.selected.phrase.type = this.dropzone.phrase.type;
+				}
 				this.dropzone.setEmpty(false);
 			}
 			else {
@@ -208,22 +219,10 @@ export class Narrator extends Phaser.GameObjects.Container {
 	}
 
 	swapPhrases(a: Phrase, b: Phrase) {
-		let text = a.text;
-		let audio = a.audio;
-		let draggable = a.draggable;
-		let empty = a.empty;
-		let trigger = a.trigger;
-
-		a.text = b.text;
-		a.audio = b.audio;
-		a.draggable = b.draggable;
-		a.empty = b.empty;
-		a.trigger = b.trigger;
-
-		b.text = text;
-		b.audio = audio;
-		b.draggable = draggable;
-		b.empty = empty;
-		b.trigger = trigger;
+		for (let prop of ["text", "audio", "draggable", "empty", "trigger", "type"]) {
+			let temp = a[prop];
+			a[prop] = b[prop];
+			b[prop] = temp;
+		}
 	}
 }

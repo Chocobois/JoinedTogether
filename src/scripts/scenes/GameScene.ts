@@ -9,7 +9,7 @@ import { World } from "../components/World";
 export class GameScene extends BaseScene {
 	private audio: AudioManager;
 	public player: Player;
-	public monsters: Monster[];
+	public monsters: any;
 	private world: World;
 	private narrator: Narrator;
 	private keys: any;
@@ -33,10 +33,16 @@ export class GameScene extends BaseScene {
 		this.world = new World(this, 0,0);
 
 		// Player
-		this.player = new Player(this, 0.3*this.W, this.CY);
+		let px = areaData["0"].hitarea.x;
+		let py = areaData["0"].hitarea.y;
+		this.player = new Player(this, px, py);
 		// this.player.setScrollFactor(0, 0);
 		this.physics.world.enable(this.player.sprite);
 		this.cameras.main.startFollow(this.player);
+
+		// Monster
+		// this.guardMonster = new Monster(this, 400, 400);
+		// this.monsters.push(this.guardMonster);
 
 		// Narrator
 		this.narrator = new Narrator(this, this.CX, 0.85*this.H);
@@ -44,6 +50,12 @@ export class GameScene extends BaseScene {
 
 		// Audio
 		this.audio = new AudioManager(this, this.CX, 0.85*this.H);
+
+		// let pointer = this.add.image(this.player.x, this.player.y, "pointer");
+		// pointer.setScale(0.4);
+
+		// Light
+		// let light1 = this.add.pointlight(1*200, 200, 0xFF7700, 256, 0.1, 0.1);
 
 		this.createAreaTriggers();
 
@@ -61,7 +73,7 @@ export class GameScene extends BaseScene {
 			this.narrator.onDragEnd();
 		}
 
-		this.player.isAsleep = (phraseData["0b"].trigger == "sleeping");
+		this.player.isAsleep = (phraseData["0d"].trigger == "sleeping");
 	}
 
 
