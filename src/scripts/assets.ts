@@ -16,7 +16,8 @@ let loadTile = (name: string): Image => {
 
 const images: Image[] = prependPath("assets/images/", [
 	loadImg("halfdoorlock"),
-	loadImg("halfdooropen")
+	loadImg("halfdooropen"),
+	loadImg("pointer")
 ]);
 
 const tiles: Image[] = prependPath("assets/tilemaps/", [
