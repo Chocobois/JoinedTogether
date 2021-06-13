@@ -60,6 +60,8 @@ export class GameScene extends BaseScene {
 			this.currentZone = undefined;
 			this.narrator.onDragEnd();
 		}
+
+		this.player.isAsleep = (phraseData["0b"].trigger == "sleeping");
 	}
 
 

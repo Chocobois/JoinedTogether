@@ -63,7 +63,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.dragWord.update(time, delta);
 
 		this.thoughtWord.x = this.scene.CX - this.thoughtWord.displayWidth/2;
-		this.thoughtWord.y = this.scene.CY - 115;
+		this.thoughtWord.y = this.scene.CY - 117;
 
 		let showThought = (!this.thoughtWord.empty || this.dragWord.drag);
 		this.thoughtWord.setVisible(showThought);
@@ -212,15 +212,18 @@ export class Narrator extends Phaser.GameObjects.Container {
 		let audio = a.audio;
 		let draggable = a.draggable;
 		let empty = a.empty;
+		let trigger = a.trigger;
 
 		a.text = b.text;
 		a.audio = b.audio;
 		a.draggable = b.draggable;
 		a.empty = b.empty;
+		a.trigger = b.trigger;
 
 		b.text = text;
 		b.audio = audio;
 		b.draggable = draggable;
 		b.empty = empty;
+		b.trigger = trigger;
 	}
 }

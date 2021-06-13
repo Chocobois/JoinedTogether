@@ -3,6 +3,7 @@ export interface Phrase {
 	audio?: string;
 	draggable: boolean;
 	empty: boolean;
+	trigger?: string;
 }
 
 let phraseData = {
@@ -54,7 +55,6 @@ let phraseData = {
 	},
 	"4b": {
 		text: "<empty>",
-		audio: undefined,
 		draggable: true,
 		empty: true
 	},
@@ -64,9 +64,25 @@ let phraseData = {
 		draggable: false,
 		empty: false
 	},
+
+	"0a": {
+		text: "Deep in a dungeon, there is a cat",
+		draggable: false,
+		empty: false
+	},
+	"0b": {
+		text: "who is asleep",
+		draggable: true,
+		empty: false,
+		trigger: "sleeping"
+	},
 };
 
 let areaData = {
+	"0": {
+		hitarea: {x:300, y:300, w:100, h:100},
+		phrases: ["0a", "0b"]
+	},
 	"1": {
 		hitarea: {x:100, y:100, w:100, h:100},
 		phrases: ["1"]
