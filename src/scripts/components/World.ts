@@ -43,13 +43,13 @@ export class World extends Phaser.GameObjects.Container {
 
     let scale = this.properties["Scale"];
 
-    this.wallLayer = this.world.createLayer('Background', tileset);
-    this.wallLayer.setPosition(this.wallLayer.x*scale,this.wallLayer.y*scale);
-    this.wallLayer.setScale(scale);
-
 
     this.groundLayer = this.world.createLayer('Ground', tileset);
     this.groundLayer.setPosition(this.groundLayer.x*scale,this.groundLayer.y*scale);
     this.groundLayer.setScale(scale);
+
+    this.wallLayer = this.world.createLayer('Foreground', tileset);
+    this.wallLayer.setPosition(this.wallLayer.x*scale,this.wallLayer.y*scale);
+    this.wallLayer.setScale(scale);
   }
 }

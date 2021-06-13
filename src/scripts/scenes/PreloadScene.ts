@@ -4,6 +4,8 @@ import { BlurPostFilter } from "../pipelines/BlurPostFilter";
 import { images, tiles, spritesheets, audio } from "../assets";
 
 export class PreloadScene extends BaseScene {
+	tapToStart: any;
+
 	constructor() {
 		super({key: "PreloadScene"});
 	}
@@ -24,7 +26,7 @@ export class PreloadScene extends BaseScene {
 		let bar = this.add.rectangle(x, y, 1, 8, 0xDDDDDD).setOrigin(0, 0.5);
 
 		// Loading text
-		let text = this.createText(x, y, 3*bar.height, this.weights.bold, "#DDD", "Loading...").setOrigin(0, 1.5);
+		let text = this.createText(x, y, 3*bar.height, "#DDD", "Loading...").setOrigin(0, 1.5);
 
 		// Listener
 		this.load.on("progress", (progress) => {
@@ -58,8 +60,22 @@ export class PreloadScene extends BaseScene {
 	}
 
 	create() {
-		this.fade(true, 100, 0x000000);
-		this.addEvent(110, () => {
+		let width = 0.5 * this.W;
+		let x = this.CX + width/2;
+		let y = this.CY;
+		this.tapToStart = this.createText(x, y, 3*8, "#FFD", "Tap to start!")
+			.setOrigin(1.0, -0.5);
+
+		this.input.on('pointerdown', this.start.bind(this));
+	}
+
+	update(time: number) {
+		this.tapToStart.setAlpha(0.8+0.2*Math.sin(time/100));
+	}
+
+	start() {
+		this.fade(true, 800, 0x000000);
+		this.addEvent(1000, () => {
 			this.scene.start("GameScene");
 		});
 	}

@@ -1,24 +1,6 @@
-enum Weights {
-	thin = "Thin",
-	light = "Light",
-	regular = "Regular",
-	bold = "Bold",
-	black = "Black"
-}
-
 export class BaseScene extends Phaser.Scene {
-	public weights: any;
-
 	constructor(config: Phaser.Types.Scenes.SettingsConfig) {
 		super(config);
-
-		this.weights = {
-			thin: Weights.thin,
-			light: Weights.light,
-			regular: Weights.regular,
-			bold: Weights.bold,
-			black: Weights.black,
-		};
 	}
 
 	// Start a camera fade effect to a specific color
@@ -39,9 +21,9 @@ export class BaseScene extends Phaser.Scene {
 	}
 
 	// Creates Phaser text object
-	createText(x: number=0, y: number=0, size: number=20, weight: Weights=Weights.regular, color: string="#FFF", text: string=""): Phaser.GameObjects.Text {
+	createText(x: number=0, y: number=0, size: number=20, color: string="#FFF", text: string=""): Phaser.GameObjects.Text {
 		return this.add.text(x, y, text, {
-			fontFamily: "Lato" + weight,
+			fontFamily: "Suplexmentary",
 			fontSize: Math.max(size, 1) + "px",
 			color: color
 		}).setLineSpacing(0.4*size);

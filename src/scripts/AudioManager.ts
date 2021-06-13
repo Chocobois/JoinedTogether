@@ -24,10 +24,15 @@ export class AudioManager {
 		this.sounds.set(key, sound);
 	}
 
-	play(key: string) {
+	play(key: string, config?: any) {
 		let audio = this.sounds.get(key);
 		if (audio) {
-			audio.play({ volume: 0.5, rate: 1.0 });
+			if (config) {
+				audio.play(config);
+			}
+			else {
+				audio.play();
+			}
 		}
 
 		// volume

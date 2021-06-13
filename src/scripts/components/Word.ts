@@ -18,29 +18,26 @@ export class Word extends Phaser.GameObjects.Text {
 		this.setScrollFactor(0, 0);
 	}
 
-	update(isDragging: boolean, selected: any, isThought: boolean) {
-		if (this.phrase) {
-			if (this.phrase.draggable) {
-				if (this.phrase.empty) {
-					this.setStroke("#FFAA00", 4);
-					if (isDragging && (isThought || this.phrase.type == selected.phrase.type || !this.phrase.type || !selected.phrase.type)) {
-						this.setText("______");
-					}
-					else {
-						this.setText("");
-					}
+	update(isDragging: boolean, selected: any, allowedDrop: boolean) {
+		if (this.phrase && this.phrase.draggable) {
+			if (this.phrase.empty) {
+				this.setStroke("#FFAA00", 4);
+				// if (/*isDragging &&*/(allowedDrop || this.phrase.type == selected.phrase.type || !this.phrase.type || !selected.phrase.type)) {
+				if (allowedDrop) {
+					this.setText("_____");
 				}
 				else {
-					this.setStroke("#FF7700", 4);
-					this.setText(this.phrase.text);
+					this.setText("");
 				}
 			}
+			else {
+				this.setStroke("#FF7700", 4);
+				this.setText(this.phrase.text);
+			}
 		}
-		// if (this.phrase)
-		// 	if (this.phrase.type)
-		// 		this.setText('<'+this.phrase.type!+','+this.phrase.empty+'>');
-		// 	else
-		// 		this.setText('word');
+
+		// const k = 1;
+		// this.input.hitArea.setTo(-k, -k, this.width+2*k, this.height+2*k);
 	}
 
 	onDropzone() {

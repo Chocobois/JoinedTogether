@@ -8,11 +8,14 @@ export class Narrator extends Phaser.GameObjects.Container {
 
 	private cX: number;
 	private cY: number;
+	public bg: Phaser.GameObjects.Image;
 	private words: Word[];
 	public thoughtWord: Word;
 	public dragWord: DragWord;
 	private selected?: Word;
 	private dropzone?: Word;
+	private fontConfig: any;
+	private thoughtAlpha: number;
 
 	constructor(scene: GameScene, x: number, y: number) {
 		super(scene, 0, 0);
@@ -20,6 +23,18 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.cY = y;
 		this.scene = scene;
 		this.scene.add.existing(this);
+
+		// Font
+		this.fontConfig = {
+			fontFamily: "Suplexmentary",
+			fontSize: "28px",
+			color: "#FFF"
+		};
+
+		// Background
+		this.bg = this.scene.add.image(this.cX, this.cY, "text_bg");
+		this.bg.setScrollFactor(0, 0);
+		this.add(this.bg);
 
 		// Create Words
 		this.words = [];
@@ -34,15 +49,15 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.thoughtWord.setPhrase(phraseData["player"]);
 		this.thoughtWord.setVisible(true);
 		this.thoughtWord.setScale(0.7);
+		this.thoughtWord.setDepth(100);
 		this.scene.add.existing(this.thoughtWord);
 
+		this.thoughtAlpha = 0;
+
 		// Create interactive word
-		this.dragWord = new DragWord(this.scene, {
-			fontFamily: "LatoRegular",
-			fontSize: "30px",
-			color: "#FFF"
-		});
+		this.dragWord = new DragWord(this.scene, this.fontConfig);
 		this.makeDraggable();
+		this.dragWord.setDepth(100);
 		this.scene.add.existing(this.dragWord);
 
 
@@ -53,10 +68,18 @@ export class Narrator extends Phaser.GameObjects.Container {
 	}
 
 	update(time: number, delta: number) {
+		let thoughtType: string | undefined = undefined;
+		if (!this.thoughtWord.empty || this.dragWord.drag) {
+			thoughtType = this.thoughtWord.phrase.type;
+		}
+
 		this.dropzone = undefined;
 		this.words.forEach((word: Word) => {
-			word.update(this.dragWord.drag, this.selected, false);
-			this.checkOverlap(word);
+			if (word.phrase) {
+				// console.log(word.type, thoughtType);
+				word.update(this.dragWord.drag, this.selected, thoughtType == word.phrase.type);
+				this.checkOverlap(word);
+			}
 		});
 		this.thoughtWord.update(this.dragWord.drag, this.selected, true);
 		this.checkOverlap(this.thoughtWord);
@@ -68,17 +91,19 @@ export class Narrator extends Phaser.GameObjects.Container {
 		this.thoughtWord.y = this.scene.CY - 117;
 
 		let showThought = (!this.thoughtWord.empty || this.dragWord.drag);
-		this.thoughtWord.setVisible(showThought);
-		this.scene.player.thoughtBubble.setVisible(showThought);
+		if (showThought && this.thoughtAlpha < 1) {
+			this.thoughtAlpha += 0.1;
+		}
+		if (!showThought && this.thoughtAlpha > 0) {
+			this.thoughtAlpha -= 0.1;
+		}
+		this.thoughtWord.setAlpha(this.thoughtAlpha);
+		this.scene.player.thoughtBubble.setAlpha(this.thoughtAlpha);
 	}
 
 
 	createWord() {
-		let word = new Word(this.scene, {
-			fontFamily: "LatoRegular",
-			fontSize: "30px",
-			color: "#FFF"
-		});
+		let word = new Word(this.scene, this.fontConfig);
 		this.makeSelectable(word);
 		return word;
 	}
@@ -122,6 +147,8 @@ export class Narrator extends Phaser.GameObjects.Container {
 			this.dragWord.x = this.selected.x;
 			this.dragWord.y = this.selected.y;
 		}
+
+		this.bg.scaleX = (80 + totalWidth) / this.bg.width;
 	}
 
 	makeSelectable(word: Word) {
@@ -192,6 +219,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 			this.selected.setEmpty(true);
 			this.repositionText();
 		}
+		this.scene.audio.play("UI_PickUp");
 	}
 
 	onDragEnd() {
@@ -208,6 +236,7 @@ export class Narrator extends Phaser.GameObjects.Container {
 					this.selected.phrase.type = this.dropzone.phrase.type;
 				}
 				this.dropzone.setEmpty(false);
+				this.scene.audio.play("UI_PutDown");
 			}
 			else {
 				this.selected.setVisible(true);

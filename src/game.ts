@@ -5,8 +5,6 @@ import RoundRectanglePlugin from "phaser3-rex-plugins/plugins/roundrectangle-plu
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.WEBGL, // Phaser.AUTO
-	// width: 16*70*1.5,
-	// height: 9*70*1.5,
 	width: 1920/2,
 	height: 1080/2,
 	scale: {
@@ -16,7 +14,7 @@ const config: Phaser.Types.Core.GameConfig = {
 	physics: {
 		default: 'arcade',
 		arcade: {
-			debug: true,
+			// debug: true,
 			gravity: { y: 0 }
 		}
 	},
