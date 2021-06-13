@@ -1,8 +1,12 @@
 import { GameScene } from "../scenes/GameScene";
+import { Player } from "./Player";
 
 export class World extends Phaser.GameObjects.Container {
 	public scene: GameScene;
   public properties: {};
+
+  private wallLayer: Phaser.Tilemaps.TilemapLayer;
+  private groundLayer: Phaser.Tilemaps.TilemapLayer;
 
   private world: Phaser.Tilemaps.Tilemap;
 
@@ -15,6 +19,13 @@ export class World extends Phaser.GameObjects.Container {
       this.properties[prop.name] = prop.value;
     }
   }
+
+  public wallInPlayer(player: Player)
+  {
+    this.wallLayer.setCollisionByExclusion([-1]);
+    this.scene.physics.collide(player.sprite, this.wallLayer, () => {console.log("hello?");});
+  }
+
   constructor(scene: GameScene, x: number, y: number) {
 		super(scene, x, y);
 		this.scene = scene;
@@ -25,13 +36,20 @@ export class World extends Phaser.GameObjects.Container {
 
     let tileset: Phaser.Tilemaps.Tileset[] = [];
     for( let tile of this.world.tilesets )
-      tileset.push(this.world.addTilesetImage(tile.name, tile.name));
+    {
+      let ts = this.world.addTilesetImage(tile.name, tile.name);
+      tileset.push(ts);
+    }
 
     let scale = this.properties["Scale"];
 
-    let layer = this.world.createLayer('Background', tileset);
-    layer.setPosition(layer.x*scale,layer.y*scale);
-    layer.setScale(scale);
+    this.wallLayer = this.world.createLayer('Background', tileset);
+    this.wallLayer.setPosition(this.wallLayer.x*scale,this.wallLayer.y*scale);
+    this.wallLayer.setScale(scale);
 
+
+    this.groundLayer = this.world.createLayer('Ground', tileset);
+    this.groundLayer.setPosition(this.groundLayer.x*scale,this.groundLayer.y*scale);
+    this.groundLayer.setScale(scale);
   }
 }

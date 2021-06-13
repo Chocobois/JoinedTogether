@@ -50,10 +50,10 @@ export class PreloadScene extends BaseScene {
 		}
 
 		// Load tilemaps
+		this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
 		for (let asset of tiles) {
 			this.load.image(asset.key, asset.path);
 		}
-		this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
 
 	}
 

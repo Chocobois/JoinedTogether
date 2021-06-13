@@ -38,7 +38,7 @@ export class GameScene extends BaseScene {
 		this.player = new Player(this, px, py);
 		// this.player.setScrollFactor(0, 0);
 		this.physics.world.enable(this.player.sprite);
-		this.cameras.main.startFollow(this.player);
+		this.cameras.main.startFollow(this.player.sprite);
 
 		// Monster
 		// this.guardMonster = new Monster(this, 400, 400);
@@ -58,6 +58,7 @@ export class GameScene extends BaseScene {
 		// let light1 = this.add.pointlight(1*200, 200, 0xFF7700, 256, 0.1, 0.1);
 
 		this.createAreaTriggers();
+		this.world.wallInPlayer(this.player);
 
 		this.setupInput();
 	}
