@@ -1,11 +1,12 @@
 import { GameScene } from "../scenes/GameScene";
+import { Player } from "./Player";
 
 export class World extends Phaser.GameObjects.Container {
 	public scene: GameScene;
   public properties: {};
 
-  private wallLayer;
-  private groundLayer;
+  private wallLayer: Phaser.Tilemaps.TilemapLayer;
+  private groundLayer: Phaser.Tilemaps.TilemapLayer;
 
   private world: Phaser.Tilemaps.Tilemap;
 
@@ -19,10 +20,10 @@ export class World extends Phaser.GameObjects.Container {
     }
   }
 
-  public wallInPlayer(player: Phaser.GameObjects.GameObject)
+  public wallInPlayer(player: Player)
   {
     this.wallLayer.setCollisionByExclusion([-1]);
-    this.scene.physics.collide(player, this.wallLayer);
+    this.scene.physics.collide(player.sprite, this.wallLayer, () => {console.log("hello?");});
   }
 
   constructor(scene: GameScene, x: number, y: number) {
