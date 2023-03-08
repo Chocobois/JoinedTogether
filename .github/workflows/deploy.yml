@@ -44,6 +44,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          title: "Twilight Wings latest build"
+          title: "Cat Got Your Tongue latest build"
           files: |
             game-web.zip
